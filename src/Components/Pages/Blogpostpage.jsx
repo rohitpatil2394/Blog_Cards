@@ -70,6 +70,7 @@ function Blogpostpage() {
 
     const styles = {
         container: {
+            width: "90%",
             maxWidth: "800px",
             margin: "40px auto",
             padding: "20px",
@@ -77,7 +78,8 @@ function Blogpostpage() {
         },
         image: {
             width: "100%",
-            height: "400px",
+            height: "auto",
+            maxHeight: "400px",
             objectFit: "cover",
             borderRadius: "10px",
             marginBottom: "20px"
@@ -119,7 +121,8 @@ function Blogpostpage() {
             gap: "20px",
             marginTop: "20px",
             borderTop: "1px solid #ddd",
-            paddingTop: "15px"
+            paddingTop: "15px",
+            flexWrap: "wrap"
         },
         btn: {
             cursor: "pointer",
@@ -130,19 +133,46 @@ function Blogpostpage() {
     return (
         <div style={styles.container}>
 
-            <img src={blogpost.image} alt="" style={styles.image} />
+            {/* 🔥 Responsive CSS */}
+            <style>{`
+                @media (max-width: 768px) {
+                    .authorRow {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 5px;
+                    }
 
-            <h1 style={styles.title}>{blogpost.title}</h1>
+                    .title {
+                        font-size: 24px !important;
+                    }
+
+                    .para {
+                        font-size: 16px !important;
+                    }
+                }
+            `}</style>
+
+            <img 
+                src={blogpost.image} 
+                alt="" 
+                style={styles.image} 
+            />
+
+            <h1 style={styles.title} className="title">
+                {blogpost.title}
+            </h1>
 
             {/* Author + Date */}
-            <div style={styles.authorRow}>
+            <div style={styles.authorRow} className="authorRow">
                 <div>
                     <span style={styles.author}>{blogpost.author}</span> · {blogpost.date}
                 </div>
                 <div>{blogpost.readTime}</div>
             </div>
 
-            <p style={styles.para}>{blogpost.para}</p>
+            <p style={styles.para} className="para">
+                {blogpost.para}
+            </p>
 
             {/* Tags */}
             <div style={styles.tags}>

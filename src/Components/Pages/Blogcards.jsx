@@ -11,7 +11,8 @@ function Blogcards({ id, title, para, image, author, date, likes, comments }) {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "60%",
+    width: "90%",
+    maxWidth: "800px",
     margin: "20px auto",
     padding: "20px",
     borderBottom: "1px solid #e5e7eb",
@@ -38,12 +39,6 @@ function Blogcards({ id, title, para, image, author, date, likes, comments }) {
     borderRadius: "6px"
   };
 
-  const topLine = {
-    fontSize: "13px",
-    color: "#6b7280",
-    marginBottom: "5px"
-  };
-
   const titleStyle = {
     margin: "5px 0",
     fontSize: "20px",
@@ -61,59 +56,72 @@ function Blogcards({ id, title, para, image, author, date, likes, comments }) {
     marginTop: "10px",
     alignItems: "center",
     fontSize: "14px",
-    color: "#6b7280"
-  };
-
-  const iconStyle = {
-    display: "flex",
-    alignItems: "center",
-    gap: "5px"
+    color: "#6b7280",
+    flexWrap: "wrap"
   };
 
   return (
     <div 
       style={cardStyle} 
+      className="card"
       onClick={() => navigate(`/blog/${id}`)}
       onMouseEnter={e => e.currentTarget.style.background = "#ece0e0"}
       onMouseLeave={e => e.currentTarget.style.background = "white"}
     >
-      
-      {/* LEFT CONTENT */}
+
+      {/* 🔥 ONLY SMALL FIX (not breaking UI) */}
+      <style>{`
+        @media (max-width: 768px) {
+          .card {
+            width: 95% !important;
+            padding: 15px !important;
+          }
+
+          .card img {
+            width: 120px !important;
+            height: 90px !important;
+          }
+
+          .title {
+            font-size: 16px !important;
+          }
+
+          .para {
+            font-size: 13px !important;
+          }
+        }
+      `}</style>
+
+      {/* LEFT */}
       <div style={leftStyle}>
 
-        {/* Author line */}
-        <div style={topLine}>
+        <div style={{ fontSize: "13px", color: "#6b7280" }}>
           In <b>{author}</b>
         </div>
 
-        {/* Title */}
-        <h2 style={titleStyle}>{title}</h2>
+        <h2 style={titleStyle} className="title">{title}</h2>
 
-        {/* Description */}
-        <p style={paraStyle}>{para}</p>
+        <p style={paraStyle} className="para">{para}</p>
 
-        {/* Stats */}
         <div style={statsRow}>
           <span>⭐ {date}</span>
 
-          <span style={iconStyle}>
+          <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
             <AiOutlineLike /> {likes}
           </span>
 
-          <span style={iconStyle}>
+          <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
             <FaRegCommentDots /> {comments}
           </span>
 
-          <span>
-            <FaRegBookmark />
-          </span>
+          <FaRegBookmark />
         </div>
 
       </div>
 
-      {/* RIGHT IMAGE */}
+      {/* RIGHT IMAGE (UNCHANGED STRUCTURE) */}
       <div style={rightStyle}>
-        <img style={imgStyle} src={image} alt="" />
+        <img src={image} alt="" style={imgStyle} />
       </div>
 
     </div>

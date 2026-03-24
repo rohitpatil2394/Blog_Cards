@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaBookmark, FaUser, FaFileAlt, FaChartBar } from "react-icons/fa";
+import { FaHome, FaBookmark, FaUser, FaFileAlt, FaChartBar, FaBars } from "react-icons/fa";
 
 const Navbar = () => {
+
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <style>{`
@@ -18,6 +21,7 @@ const Navbar = () => {
           display: flex;
           flex-direction: column;
           font-family: Arial;
+          transition: 0.3s;
         }
 
         .logo {
@@ -32,11 +36,14 @@ const Navbar = () => {
         }
 
         .menu li {
+          padding: 10px 0;
+        }
+
+        .menu li a {
           display: flex;
           align-items: center;
           gap: 10px;
-          padding: 10px 0;
-          cursor: pointer;
+          color: black;
         }
 
         .menu li:hover {
@@ -49,13 +56,43 @@ const Navbar = () => {
           color: gray;
         }
 
+        .toggleBtn {
+          display: none;
+          position: fixed;
+          top: 15px;
+          left: 15px;
+          font-size: 22px;
+          cursor: pointer;
+          z-index: 1000;
+        }
+
+        /* 🔥 Mobile Fix */
+        @media (max-width: 768px) {
+          .sidebar {
+            left: -240px;
+          }
+
+          .sidebar.active {
+            left: 0;
+          }
+
+          .toggleBtn {
+            display: block;
+          }
+        }
+
         a {
           text-decoration: none;
-          color: black;
         }
       `}</style>
 
-      <div className="sidebar">
+      {/* 🔥 Hamburger Icon */}
+      <div className="toggleBtn" onClick={() => setOpen(!open)}>
+        <FaBars />
+      </div>
+
+      {/* Sidebar */}
+      <div className={`sidebar ${open ? "active" : ""}`}>
         <div className="logo">Blog-Cards</div>
 
         <ul className="menu">
